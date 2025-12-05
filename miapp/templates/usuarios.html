@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Usuarios</title>
+<style>
+body{font-family:Arial, sans-serif;padding:20px}
+.card{padding:10px;border:1px solid #ddd;margin-bottom:10px;border-radius:6px;display:flex;align-items:center}
+.card img{width:80px;height:80px;object-fit:cover;border-radius:4px;margin-right:12px}
+.actions{margin-left:auto}
+</style>
+</head>
+<body>
+    <h1>Usuarios registrados</h1>
+    <p><a href="{% url 'formulario' %}">Crear usuario</a> · <a href="{% url 'logout' %}">Cerrar sesión</a></p>
+
+    {% for u in users %}
+        <div class="card">
+            {% if u.image_url %}
+                <img src="{{ u.image_url }}" alt="{{ u.username }}">
+            {% else %}
+                <img src="https://via.placeholder.com/80x80.png?text=No+Image" alt="no-image">
+            {% endif %}
+            <div>
+                <strong>{{ u.username }}</strong>
+            </div>
+            <div class="actions">
+                <a href="{% url 'editar' u.id %}">Actualizar</a>
+                <a href="{% url 'eliminar' u.id %}" style="color:#900;margin-left:8px">Eliminar</a>
+            </div>
+        </div>
+    {% empty %}
+        <p>No hay usuarios registrados.</p>
+    {% endfor %}
+</body>
+</html>
